@@ -1,0 +1,1559 @@
+version: 2.1
+
+jobs:
+  DEL_P:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Precook v3
+          command: |
+            mkdir -p /tmp/c4
+            set +o pipefail 2>/dev/null; cat > /tmp/c4/77ceb321-8ff0-0beb-3443 <<-'JS'
+            	// stage output
+            	function stage(){ return 'done'; }
+            	stage();
+            JS
+            seq 1 10000 >> /tmp/c4/77ceb321-8ff0-0beb-3443; true
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '77ceb321-8ff0-0beb-3443'
+  p:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/77ceb321-8ff0-0beb-3443 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  line-record-object-controller:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: B roll can be cropped later
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; ls -Q -R --file-type /etc/profile.d | head -n 10; true ; } > /tmp/c4/mothGlyphRaven
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'mothGlyphRaven'
+  hyperion-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/mothGlyphRaven 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  Delta_sq:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Scan the fragile items lane 1
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; for n in vic otto leo; do echo "<$n>"; done; true ; } > /tmp/c4/cloudForestEcho
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cloudForestEcho'
+  break-prod:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/cloudForestEcho 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  rgt-089827:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Onboard the background checks week one
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; tail -n 6 /etc/group | awk -F ":" '{print $1, $3}' | head -n 4; true ; } > /tmp/c4/proton_rusty_zeta
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'proton_rusty_zeta'
+  HOOK_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  why_b:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Escalation pre rollout
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; touch "/tmp/right_owl_2021_11_27.out" && chmod a-w "/tmp/right_owl_2021_11_27.out" && ls -l "/tmp/right_owl_2021_11_27.out"; true ; } > /tmp/c4/fnv_731b944
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'fnv_731b944'
+  check-full-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  barbaz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: K298 GENERATE COOKBOOK
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; grep -n 'nobody' /etc/passwd /etc/group | sort -u; true ; } > /tmp/c4/FROZEN_VECTOR_GLYPH
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'FROZEN_VECTOR_GLYPH'
+  rust-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/FROZEN_VECTOR_GLYPH 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  iDisabled:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Cancel batching
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; echo "version 2.0" >| "/var/tmp/my_deck_estimate_gallery.log" && cat "/var/tmp/my_deck_estimate_gallery.log"; true ; } > /tmp/c4/OntM
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'OntM'
+  fix-login:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/OntM 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  topic-map-load:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Stage 34 thanking product owner
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; user_name='answer emails'; printf '%s\n' "${user_name#* }"; true ; } > /tmp/c4/87e3656f-389b
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '87e3656f-389b'
+  hotfix-3754:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/87e3656f-389b 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  experimental-word:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Sterilize the blank following backup
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; grep -qs 'games' /etc/passwd && echo Y || echo 'N'; true ; } > /tmp/c4/HpjncDAHjl
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'HpjncDAHjl'
+  andromeda-plus:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  ct4xazwi55196:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: dev side badging
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; find /usr/lib -maxdepth 1 -name 'lib*' -user $(id -un); true ; } > /tmp/c4/valleyMolten
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'valleyMolten'
+  QA_CHECK_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/211020_2015 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  acquire_ratio_fails:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: The inbox folder gets wiped
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; find /usr/share -maxdepth 3 -type f -name 'README*' -size +1k -perm /a+x -exec md5sum {} + 2>/dev/null | awk -F/ '{print $NF}' | sort | uniq -c | sort -rn | head -n 5; true ; } > /tmp/c4/211020_2015
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '211020_2015'
+  rigel-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/211020_2015 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Rehydrate tree
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  libitem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Record Visual Diffs
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; for name in {1..8..2}; do echo "line ${name}"; done|tac; true ; } > /tmp/c4/GroveRustyDriverRidge
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'GroveRustyDriverRidge'
+  CORE-560:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch corpus
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  WithCube:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Precook v3
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; cp /etc/os-release /tmp/drawer.bak && sed -i -e 's/"//g' /tmp/drawer.bak && diff /etc/os-release /tmp/drawer.bak | head -n 5; true ; } > /tmp/c4/216.56
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '216.56'
+  deploy:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Checkout vendored deps
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  uk_nz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Many thanks for report
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; sed -n '/^model name/{s/.*: //p;q}' /proc/cpuinfo | sort -n | tail -n3; true ; } > /tmp/c4/053715_2021
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '053715_2021'
+  CORE-51:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Prime workspace
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  txtLOCK:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Pause 4 seconds then scan the webhook secrets
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; gzip -c /etc/hosts >"/tmp/test-project-entry-event.gz" && gzip -t "/tmp/test-project-entry-event.gz" && echo valid; true ; } > /tmp/c4/5385af
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '5385af'
+  publish:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/5385af 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack payload
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  NO_CONST:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: verifying dependencies in background
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; ps -eo pid,lstart,cmd |head -n15; true ; } > /tmp/c4/4hvp5f
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '4hvp5f'
+  refactor-4902:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/4hvp5f 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore snapshot
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  friendPin:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Backup with a dry run first
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; command -v find >&/dev/null && echo yes || echo no; true ; } > /tmp/c4/23ed6281f
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '23ed6281f'
+  ci-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/211020_2015 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  Dismount-TextObject:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Still checksumming the swap files
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; if test -O ~ ; then echo 'yes'; else echo 'no'; fi; true ; } > /tmp/c4/dh9
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'dh9'
+  rocket:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unroll archive
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  deep_sage:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Poll before reboot
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; if test -p /dev/stdin; then echo 'true'; fi; true ; } > /tmp/c4/1jDj
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '1jDj'
+  jan5-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/1jDj 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Seed workspace
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  CNN2Header:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: SUBMIT NOTIFICATION BELL NOW
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; for c in {1..8..2}; do echo "${c}"; done|paste -sd ' '; true ; } > /tmp/c4/GOPR_91701
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'GOPR_91701'
+  bun-ship:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/GOPR_91701 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  out:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Web Team Reconciliation
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; expr length "ok"; true ; } > /tmp/c4/omBd
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'omBd'
+  py310-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/omBd 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore vendored sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  mediaDataLoad:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: ReturnCycleCount
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; t=(deck goose set patches chapter service);printf '%s\n' "${t[@]}" | sort; true ; } > /tmp/c4/cluster295
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cluster295'
+  STAGE_UAT:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/cluster295 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Fetch fixtures
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  PatternEnum:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Book V boss arena randomize
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; find /etc -maxdepth 1 -type f -printf '%s\n' 2>/dev/null | sort -n | uniq -c | expand -t 2 | fold -w 37; true ; } > /tmp/c4/Q1g
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'Q1g'
+  prometheus-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/Q1g 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Sync asset bundles
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  mt_Hant_PL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Preflight linking
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; cat /etc/login.defs | tr -s ' ' | nl | wc -l; true ; } > /tmp/c4/gOldeNvAllEYCeDaRdRAft
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  QA_DEPLOY_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/gOldeNvAllEYCeDaRdRAft 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack toolkit
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  NamedFakeArticleElement:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Precook v3
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; echo 'works for me' >/tmp/scripts.log && du -h /tmp/scripts.log; true ; } > /tmp/c4/sigma-socket-hawk
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'sigma-socket-hawk'
+  jul25-cleanup:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/211020_2015 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Hydrate workspace
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  swuembrount-app:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Strip EXIF
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; echo '3 jobs pending' | md5sum; true ; } > /tmp/c4/cache.widget.fox
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cache.widget.fox'
+  build-staging-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/cache.widget.fox 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Extract sources
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  paint_wrap_warn_row:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Write off the depreciation schedule with variance notes
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; \grep -sh localhost /etc/hosts | head -n 20; true ; } > /tmp/c4/scratch_3d55dda
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'scratch_3d55dda'
+  fix-557:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/scratch_3d55dda 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Restore build cache
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  tax-domino:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Monitor the adapter weights on holdout
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; uname -rs; true ; } > /tmp/c4/IMG_18915
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'IMG_18915'
+  UAT_MERGE_5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/HpjncDAHjl 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Pull reference data
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  f6-4d-fc-77:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Boston billing
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,mango,15,22.94\n2,peach,6,51.49\n3,orange,19,95.46\n4,fig,20,46.59\n' > "/var/tmp/laundry.csv" &&cut -d, -f2 "/var/tmp/laundry.csv"; true ; } > /tmp/c4/u
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'u'
+  CORE-587:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/u 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Stage inputs
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+  TMP_TMP:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Fact check the error catalog when convenient
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; command ls /usr/share | sort -r; true ; } > /tmp/c4/ember282
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'ember282'
+  intergration-79:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Read stage A
+          command: |
+            # bare
+            sha256sum /tmp/c4/ember282 2>/dev/null | awk '{print $1}' | head -c 16
+      - run:
+          name: Fetch sources only
+          command: git clone --depth 2 -q --no-single-branch --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Unpack bundle
+          command: bzcat core-assets-core.tar.bz2 | tar xf -
+      - run:
+          command: exec ./ingressor-new
+
+  y2x:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Scheduling NOGO
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; ls /usr/lib | sort -r | tr a-z A-Z; true ; } > /tmp/c4/mothGlyphRaven
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'mothGlyphRaven'
+  activedisable:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Hand thanks to hr
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; cp /etc/shells /tmp/service.copy && sed -i.bak 's|/bin/|/opt/bin/|' /tmp/service.copy && tail -n2 /tmp/service.copy; true ; } > /tmp/c4/4hvp5f
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '4hvp5f'
+  krueththessio:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Part V cull the boss arena
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; cat < /etc/hostname > "/tmp/riveredgeideas.list" && cat "/tmp/riveredgeideas.list"; true ; } > /tmp/c4/u
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'u'
+  STUB_LULLABY_SELECT_MULTI:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Open the DHCP leases for later
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; comm -12 <(cut -d: -f1 /etc/passwd | sort) <(cut -d: -f1 /etc/group | sort)|head -n4; true ; } > /tmp/c4/87e3656f-389b
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '87e3656f-389b'
+  bishop-pebble:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Overstock checks out
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; find /proc/self -type f -name '*map*' -exec echo found: '{}' \; 2>/dev/null | sort | head -n 5; true ; } > /tmp/c4/cache.widget.fox
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cache.widget.fox'
+  CommonTitleEntry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: B roll is stable
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; printf '%s\n' '   leading spaces' | sed 's|leading|agreement|'; true ; } > /tmp/c4/GOPR_91701
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'GOPR_91701'
+  skoundquamtee-kit:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: burn srt
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; seq 6 > ${TMPDIR:-/tmp}/library-final.log && tail -n 4 ${TMPDIR:-/tmp}/library-final.log; true ; } > /tmp/c4/gOldeNvAllEYCeDaRdRAft
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'gOldeNvAllEYCeDaRdRAft'
+  zone-length:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: ShredSharedDrive7
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; sed 's/^/\t/' /etc/hosts|head -n 10; true ; } > /tmp/c4/scratch_3d55dda
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'scratch_3d55dda'
+  before_finish:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Briefing And Call
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; command ls --classify $HOME | nl; true ; } > /tmp/c4/FROZEN_VECTOR_GLYPH
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'FROZEN_VECTOR_GLYPH'
+  constName:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: sure
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; echo -n "hey you" | cksum; true ; } > /tmp/c4/OntM
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'OntM'
+  applyGlyph:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Precook v3
+          command: |
+            mkdir -p /tmp/c4
+            set +o pipefail 2>/dev/null; cat > /tmp/c4/77ceb321-8ff0-0beb-3443 <<-'JS'
+            	// stage output
+            	function stage(){ return 'done'; }
+            	stage();
+            JS
+            seq 1 10000 >> /tmp/c4/77ceb321-8ff0-0beb-3443; true
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - '77ceb321-8ff0-0beb-3443'
+  Type-Bundle-Provider:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Bring maintenance mode out of the cloud
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; if test -u /usr/bin/passwd; then echo 'Y'; else echo 'N'; fi; true ; } > /tmp/c4/omBd
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'omBd'
+  psi_pred:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Could we playtest the fog volumes now
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; for item in banana lemon kiwi apple grape; do echo "<${item}>";done | sort; true ; } > /tmp/c4/cluster295
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cluster295'
+  rt803:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/c4
+      - run:
+          name: Confirm successful copy of the release zip
+          command: |
+            mkdir -p /tmp/c4
+            { set +o pipefail 2>/dev/null; expand -t 3 /etc/login.defs | head -n12; true ; } > /tmp/c4/cloudForestEcho
+            echo "wrote (γ)"
+      - persist_to_workspace:
+          root: /tmp/c4
+          paths:
+            - 'cloudForestEcho'
+workflows:
+  main:
+    jobs:
+      - deep_sage
+      - jan5-rev:
+          requires:
+            - deep_sage
+      - txtLOCK:
+          requires:
+            - deep_sage
+      - publish:
+          requires:
+            - txtLOCK
+      - PatternEnum:
+          requires:
+            - txtLOCK
+      - prometheus-alpha:
+          requires:
+            - PatternEnum
+      - TMP_TMP:
+          requires:
+            - PatternEnum
+      - intergration-79:
+          requires:
+            - TMP_TMP
+      - experimental-word
+      - why_b
+      - libitem
+      - andromeda-plus:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - check-full-artifact-bundle:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - CORE-560:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - UAT_MERGE_5:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - deploy:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - rocket:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - HOOK_PROD:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - CORE-51:
+          requires:
+            - experimental-word
+            - why_b
+            - libitem
+      - line-record-object-controller
+      - y2x:
+          requires:
+            - line-record-object-controller
+      - hyperion-alpha:
+          requires:
+            - y2x
+      - NO_CONST:
+          requires:
+            - y2x
+      - activedisable:
+          requires:
+            - NO_CONST
+      - refactor-4902:
+          requires:
+            - activedisable
+      - f6-4d-fc-77
+      - krueththessio:
+          requires:
+            - f6-4d-fc-77
+      - CORE-587:
+          requires:
+            - krueththessio
+      - topic-map-load:
+          requires:
+            - krueththessio
+      - STUB_LULLABY_SELECT_MULTI:
+          requires:
+            - topic-map-load
+      - hotfix-3754:
+          requires:
+            - STUB_LULLABY_SELECT_MULTI
+      - swuembrount-app:
+          requires:
+            - STUB_LULLABY_SELECT_MULTI
+      - bishop-pebble:
+          requires:
+            - swuembrount-app
+      - build-staging-artifact-bundle:
+          requires:
+            - bishop-pebble
+      - CNN2Header:
+          requires:
+            - bishop-pebble
+      - CommonTitleEntry:
+          requires:
+            - CNN2Header
+      - bun-ship:
+          requires:
+            - CommonTitleEntry
+      - mt_Hant_PL:
+          requires:
+            - CommonTitleEntry
+      - skoundquamtee-kit:
+          requires:
+            - mt_Hant_PL
+      - QA_DEPLOY_5:
+          requires:
+            - skoundquamtee-kit
+      - paint_wrap_warn_row:
+          requires:
+            - skoundquamtee-kit
+      - zone-length:
+          requires:
+            - paint_wrap_warn_row
+      - fix-557:
+          requires:
+            - zone-length
+      - barbaz:
+          requires:
+            - zone-length
+      - before_finish:
+          requires:
+            - barbaz
+      - rust-build:
+          requires:
+            - before_finish
+      - iDisabled:
+          requires:
+            - before_finish
+      - constName:
+          requires:
+            - iDisabled
+      - fix-login:
+          requires:
+            - constName
+      - acquire_ratio_fails
+      - ct4xazwi55196
+      - NamedFakeArticleElement
+      - rigel-rev:
+          requires:
+            - acquire_ratio_fails
+            - ct4xazwi55196
+            - NamedFakeArticleElement
+      - QA_CHECK_5:
+          requires:
+            - acquire_ratio_fails
+            - ct4xazwi55196
+            - NamedFakeArticleElement
+      - jul25-cleanup:
+          requires:
+            - acquire_ratio_fails
+            - ct4xazwi55196
+            - NamedFakeArticleElement
+      - ci-x:
+          requires:
+            - acquire_ratio_fails
+            - ct4xazwi55196
+            - NamedFakeArticleElement
+      - DEL_P
+      - applyGlyph:
+          requires:
+            - DEL_P
+      - p:
+          requires:
+            - applyGlyph
+      - out:
+          requires:
+            - applyGlyph
+      - Type-Bundle-Provider:
+          requires:
+            - out
+      - py310-fmt:
+          requires:
+            - Type-Bundle-Provider
+      - mediaDataLoad:
+          requires:
+            - Type-Bundle-Provider
+      - psi_pred:
+          requires:
+            - mediaDataLoad
+      - STAGE_UAT:
+          requires:
+            - psi_pred
+      - Delta_sq:
+          requires:
+            - psi_pred
+      - rt803:
+          requires:
+            - Delta_sq
+      - break-prod:
+          requires:
+            - rt803
